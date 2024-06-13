@@ -10,12 +10,16 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Ramsey\Uuid\Uuid;
 
+/**
+ * @method where(string $string, string $string1, string $string2)
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     protected $table = 'users';
     protected $keyType = 'string';
+    protected $rememberTokenName;
     /**
      * The attributes that are mass assignable.
      *
@@ -30,7 +34,7 @@ class User extends Authenticatable
             'password',
             'isAdmin',
         ];
-
+    
     /**
      * The attributes that should be hidden for serialization.
      *

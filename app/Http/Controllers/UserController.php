@@ -110,8 +110,18 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        //
+        try {
+            $user = $this->userService->findById($id);
+            if (!$user) {
+                return response()->view('errors.404', '', 404);
+            }
+            $this->userService->delete($user->id);
+            return redirect()->route('user.index');
+        } catch (Exception $e) {
+            Log::error("Exception error", [$e->getMessage()]);
+            return response('unexpected error', 500);
+        }
     }
 }

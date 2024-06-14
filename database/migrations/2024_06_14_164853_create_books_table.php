@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('title');
             $table->string('author');
             $table->string('registration_number');
-            $table->enum('status', [BookStatusEnum::class]);
+            $table->enum('status', [BookStatusEnum::AVAILABLE->value, BookStatusEnum::BORROWED->value]);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -2,8 +2,8 @@
 
 namespace App\Enums;
 
-enum BookStatusEnum: int
+enum BookStatusEnum: string
 {
-    case AVAILABLE = 1;
-    case BORROWED = 2;
+    case AVAILABLE = 'available';
+    case BORROWED = 'borrowed';
 }

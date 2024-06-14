@@ -20,7 +20,6 @@ class BookController extends Controller
     {
         try {
             $books = $this->bookService->getPaginateBootstrap();
-            dd($books);
             return response()->view('book.index', compact('books'));
         } catch (Exception $e) {
             Log::error("Exception error", [$e->getMessage()]);

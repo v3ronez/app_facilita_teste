@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\BookStatusEnum;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,6 +25,8 @@ class Book extends Model
             'status',
             'gender'
         ];
+
+    protected $casts = ['status' => BookStatusEnum::class];
 
     public function user()
     {

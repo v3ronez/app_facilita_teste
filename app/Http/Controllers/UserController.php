@@ -7,6 +7,7 @@ use App\Services\UserService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -75,9 +76,29 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $userID)
     {
-        //
+        try {
+            $validator = Validator::make($request->all(), [
+                'name'     => ['required', 'string', 'min:3', 'max:255'],
+                'document' => ['required', 'regex:^(\d{3}\.\d{3}\.\d{3}-\d{2}|\d{11})$^'],
+                //                'document' => ['required', 'regex:/^\d{11}$/'],
+            ]);
+            if ($validator->fails()) {
+                return back()->withErrors($validator->errors())->withInput();
+            }
+            $userExists = $this->userService->findById($userID);
+            if (!$userExists) {
+                return response()->view('errors.404', '', 404);
+            }
+            $fields = $request->only(['name', 'email', 'document']);
+            $fields['isAdmin'] = $request->has('isAdmin');
+            $user = $this->userService->updateUser($userID, $fields);
+            return view('user.show', compact('user'));
+        } catch (Exception $e) {
+            Log::error("Exception error", [$e->getMessage()]);
+            return response('unexpected error', 500);
+        }
     }
 
     /**

@@ -18,9 +18,8 @@ class UserService
         return $this->repository->create($fields);
     }
 
-    public function updateUser(int $id, array $fields)
+    public function updateUser(string $id, array $fields)
     {
-        $fields['cpf'] = clear_caracteres($fields['cpf']);
         return $this->repository->updateById($id, $fields);
     }
 

@@ -18,7 +18,7 @@
                         <tr class="font-bold text-lg text-gray-500">
                             <th>#</th>
                             <td>{{$user->name}}</td>
-                            <td>{{$user->document}}</td>
+                            <td>{{formatCpf($user->document)}}</td>
                             <td>{{$user->email}}</td>
                             <td>
                                 <button class="btn btn-neutral"><a href="{{ route('user.show', ['id' => $user->id]) }}">Ver

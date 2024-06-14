@@ -2,15 +2,17 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Ramsey\Uuid\Uuid;
 
 class Book extends Model
 {
     use HasFactory;
     use softDeletes;
+    use HasUuids;
 
     protected $table = 'books';
     protected $keyType = 'string';
@@ -20,16 +22,16 @@ class Book extends Model
             'author',
             'registration_number',
             'status',
-            'quantity_available'
+            'gender'
         ];
 
-    protected static function booted()
+    public function user()
     {
-        static::creating(fn(Book $book) => $book->id = (string)Uuid::uuid4());
+        return $this->belongsTo(User::class);
     }
 
-    public function users()
+    public function genders(): BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(Gender::class);
     }
 }

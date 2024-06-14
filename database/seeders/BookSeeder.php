@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Book;
+use App\Models\Gender;
 use Illuminate\Database\Seeder;
 
 class BookSeeder extends Seeder
@@ -12,6 +13,11 @@ class BookSeeder extends Seeder
      */
     public function run(): void
     {
-        Book::factory(50)->create();
+        $books = Book::factory(40)->create();
+        for ($index = 0; $index < Gender::all()->count(); $index++) {
+            $gender = Gender::find($index);
+            $book = $books[$index];
+            $book->genders()->attach($gender);
+        }
     }
 }

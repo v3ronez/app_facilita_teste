@@ -3,12 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Ramsey\Uuid\Uuid;
 
 /**
  * @method where(string $string, string $string1, string $string2)
@@ -19,6 +19,7 @@ class User extends Authenticatable
     use HasFactory;
     use Notifiable;
     use SoftDeletes;
+    use HasUuids;
 
     protected $table = 'users';
     protected $keyType = 'string';
@@ -60,13 +61,8 @@ class User extends Authenticatable
             'password'          => 'hashed',
         ];
 
-    protected static function booted()
-    {
-        static::creating(fn(User $user) => $user->id = (string)Uuid::uuid4());
-    }
-
     public function books()
     {
-        return $this->belongsToMany(Book::class);
+        return $this->hasMany(Loan::class);
     }
 }

@@ -21,7 +21,7 @@
                     <h1 class="text-3xl">Ver livros</h1>
                     <span>Visualizar todos os livros cadastrados no sistema e seus detalhes.</span>
                     <button class="btn btn-neutral font-black text-lg text-white">
-                        <a class="w-full" href="{{ route('user.index')}}">Ver Livros</a>
+                        <a class="w-full" href="{{ route('book.index')}}">Ver Livros</a>
                     </button>
                 </div>
             </div>

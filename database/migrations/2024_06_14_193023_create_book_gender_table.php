@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\BookStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,14 +10,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('books', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('title');
-            $table->string('author');
-            $table->string('registration_number');
-            $table->enum('status', [BookStatusEnum::class]);
+        Schema::create('book_gender', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->foreignUuid('book_id')->references('id')->on('books')->onDelete('cascade');
+            $table->foreignId('gender_id')->references('id')->on('genders')->onDelete('cascade');
+
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -27,6 +24,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('books');
+        Schema::dropIfExists('book_gender');
     }
 };

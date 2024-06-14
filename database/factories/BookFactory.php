@@ -6,7 +6,7 @@ use App\Enums\BookStatusEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Book>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Loan>
  */
 class BookFactory extends Factory
 {
@@ -22,7 +22,6 @@ class BookFactory extends Factory
             'author'              => $this->faker->name(),
             'registration_number' => uuid_create(),
             'status'              => BookStatusEnum::AVAILABLE,
-            'quantity_available'  => $this->faker->numberBetween(1, 10),
         ];
     }
 }

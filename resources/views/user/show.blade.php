@@ -1,3 +1,4 @@
+@php use Illuminate\Support\Facades\Session; @endphp
 <x-app-layout>
     <div class="flex flex-1 justify-center flex-col items-center h-full w-full gap-4 mt-10">
         <div class="w-[70%] h-full rounded border-2">
@@ -9,7 +10,8 @@
                         @method('PUT')
                         <div class="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
                             <div class="sm:col-span-2">
-                                <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Name</label>
+                                <label for="name"
+                                       class="block mb-2 text-sm font-medium text-gray-900">Name</label>
                                 <input type="text" name="name" id="name"
                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                        value="{{$user->name}}" required="required">
@@ -18,7 +20,8 @@
                                 @enderror
                             </div>
                             <div class="sm:col-span-2">
-                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
+                                <label for="email"
+                                       class="block mb-2 text-sm font-medium text-gray-900">Email</label>
                                 <input type="email" name="email" id="email"
                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                        value="{{$user->email}}" required="required">
@@ -38,7 +41,8 @@
                             </div>
                             <div class="w-full">
                                 <label for="registration_number"
-                                       class="block mb-2 text-sm font-medium text-gray-900">Número de Cadastro</label>
+                                       class="block mb-2 text-sm font-medium text-gray-900">Número de
+                                    Cadastro</label>
                                 <input type="text" name="registration_number" id="registration_number"
                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                        value="{{$user->registration_number}}" disabled>
@@ -47,8 +51,9 @@
                                 <div class="w-full">
                                     <label for="isAdmin"
                                            class="block mb-2 text-sm font-medium text-gray-900">Admin</label>
-                                    <input type="checkbox" name="isAdmin" value="" {{$user->isAdmin ? 'checked': ''}}
-                                    class="checkbox"/>
+                                    <input type="checkbox" name="isAdmin" value=""
+                                           {{$user->isAdmin ? 'checked': ''}}
+                                           class="checkbox"/>
                                 </div>
                             @endif
                         </div>

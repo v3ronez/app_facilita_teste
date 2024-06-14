@@ -15,7 +15,10 @@ use Ramsey\Uuid\Uuid;
  */
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
+    use SoftDeletes;
 
     protected $table = 'users';
     protected $keyType = 'string';
@@ -34,7 +37,7 @@ class User extends Authenticatable
             'password',
             'isAdmin',
         ];
-    
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -60,5 +63,10 @@ class User extends Authenticatable
     protected static function booted()
     {
         static::creating(fn(User $user) => $user->id = (string)Uuid::uuid4());
+    }
+
+    public function books()
+    {
+        return $this->hasMany(Book::class);
     }
 }

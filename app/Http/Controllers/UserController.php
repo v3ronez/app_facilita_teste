@@ -82,7 +82,7 @@ class UserController extends Controller
             $validator = Validator::make($request->all(), [
                 'name'     => ['required', 'string', 'min:3', 'max:255'],
                 'document' => ['required', 'regex:^(\d{3}\.\d{3}\.\d{3}-\d{2}|\d{11})$^'],
-                //                'document' => ['required', 'regex:/^\d{11}$/'],
+                'email'    => ['required', 'email'],
             ]);
             if ($validator->fails()) {
                 return back()->withErrors($validator->errors())->withInput();
@@ -94,7 +94,13 @@ class UserController extends Controller
             $fields = $request->only(['name', 'email', 'document']);
             $fields['isAdmin'] = $request->has('isAdmin');
             $user = $this->userService->updateUser($userID, $fields);
-            return view('user.show', compact('user'));
+            if (!$user) {
+                return response()->view('errors.500', '', 500);
+            }
+            return response()->redirectToRoute('user.show', ['id' => $userID])->with(
+                'success',
+                'Perfil Editado com sucesso!'
+            );
         } catch (Exception $e) {
             Log::error("Exception error", [$e->getMessage()]);
             return response('unexpected error', 500);

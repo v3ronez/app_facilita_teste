@@ -23,9 +23,11 @@
                             <th>#</th>
                             <td>{{$book->title}}</td>
                             <td>{{$book->author}}</td>
-                            <td class="{!!$book->status == BookStatusEnum::AVAILABLE ? 'text-green-600': 'text-red-600'!!}">{{$book->status}}</td>
+                            <td class="{!!$book->status == BookStatusEnum::AVAILABLE ? 'text-green-600': 'text-red-600'!!}">
+                                {{ ucfirst($book->status->value)}}
+                            </td>
                             <td>
-                                <button class="btn btn-neutral"><a href="">Ver
+                                <button class="btn btn-neutral"><a href="{{route('book.show', ['id' => $book->id])}}">Ver
                                         Perfil</a></button>
                             </td>
                         </tr>

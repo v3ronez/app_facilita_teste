@@ -31,4 +31,9 @@ class Book extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function loandedFor()
+    {
+        return Loan::query('book_id', '=', $this->id)->first();
+    }
 }

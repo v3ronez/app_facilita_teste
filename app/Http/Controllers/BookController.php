@@ -31,6 +31,20 @@ class BookController extends Controller
         }
     }
 
+    public function show(Request $request, $bookID)
+    {
+        try {
+            $book = $this->bookService->withRelations($bookID);
+            if (!$book) {
+                return response()->view('errors.404');
+            }
+            return response()->view('book.show', compact('book'));
+        } catch (Exception $e) {
+            Log::error("Exception error", [$e->getMessage()]);
+            return response('unexpected error', 500);
+        }
+    }
+
     public function create()
     {
         $genders = Gender::all();

@@ -54,7 +54,7 @@ class UserController extends Controller
     public function show(Request $request, string $userID)
     {
         try {
-            $user = $this->userService->withRelations($userID);
+            $user = $this->userService->withRelations($userID, ['books']);
             if (!$user) {
                 return response()->view('errors.404');
             }

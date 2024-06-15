@@ -13,12 +13,12 @@ class BookService
         $this->repository = $repository;
     }
 
-    public function createUser(array $fields)
+    public function create(array $fields)
     {
         return $this->repository->create($fields);
     }
 
-    public function updateUser(string $id, array $fields)
+    public function update(string $id, array $fields)
     {
         return $this->repository->updateById($id, $fields);
     }

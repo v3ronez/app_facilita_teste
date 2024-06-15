@@ -6,7 +6,6 @@ use App\Enums\BookStatusEnum;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Book extends Model
@@ -23,7 +22,7 @@ class Book extends Model
             'author',
             'registration_number',
             'status',
-            'gender'
+            'gender',
         ];
 
     protected $casts = ['status' => BookStatusEnum::class];
@@ -31,10 +30,5 @@ class Book extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function genders(): BelongsToMany
-    {
-        return $this->belongsToMany(Gender::class);
     }
 }

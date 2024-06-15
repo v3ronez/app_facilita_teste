@@ -3,6 +3,7 @@
     <div class="flex flex-1 justify-center flex-col items-center h-full w-full gap-4 mt-10">
         <div class="w-[70%] h-full rounded border-2">
             <section class="bg-white rounded border-2">
+                @dd($user)
                 <div class="max-w-2xl px-4 py-8 mx-auto lg:py-16">
                     <h2 class="mb-4 text-xl font-bold text-gray-900">Perfil</h2>
                     <form action="{{ route('user.update', ['id' => $user->id]) }}" method="POST">

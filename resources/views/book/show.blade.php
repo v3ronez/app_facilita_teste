@@ -22,8 +22,6 @@
                                 class="badge bg-red-500 border-red-400 text-white">{{ ucfirst($book->status->value)}}
                             </div>
                         @endif
-
-
                     </div>
                     <form action="{{route('book.update', ['id' => $book->id])}}" method="POST">
                         @csrf()
@@ -49,29 +47,15 @@
                                 <span class="text-red-600 font-bold">{{ $message }}</span>
                                 @enderror
                             </div>
-                            @isset($book)
-                                <div class="w-full">
-                                    <label for="registration_number"
-                                           class="block mb-2 text-sm font-medium text-gray-900">Número de
-                                        Cadastro</label>
-                                    <input type="text" name="registration_number" id="registration_number"
-                                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                           value="{{$book->registration_number}}" disabled>
-                                </div>
-                            @endisset
-                            @if($book->loandedFor())
-                                <div class="w-full">
-                                    <label for="emprestado para:"
-                                           class="block mb-2 text-sm font-medium text-gray-900">Emprestado
-                                        para:</label>
-                                    <input type="text" name="loanded_for" id="loanded_for"
-                                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                           value="{{$book->loandedFor()}}" required="required">
-                                    @error('loanded_for')
-                                    <span class="text-red-600 font-bold">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            @endif
+                            <div class="w-full">
+                                <label for="registration_number"
+                                       class="block mb-2 text-sm font-medium text-gray-900">Número de
+                                    Cadastro</label>
+                                <input type="text" name="registration_number" id="registration_number"
+                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                       value="{{$book->registration_number}}" disabled>
+                            </div>
+
                             <div class="w-full">
                                 <label for="gender"
                                        class="block mb-2 text-sm font-medium text-gray-900">Gênero</label>

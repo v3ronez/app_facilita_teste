@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\LoanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -37,10 +38,12 @@ Route::middleware('auth')->group(function () {
 
     //book
     Route::get('/books', [BookController::class, 'index'])->name('book.index');
-    Route::get('/book/new', [BookController::class, 'create'])->name('book.create');
     Route::get('/book/{id}', [BookController::class, 'show'])->name('book.show');
+    Route::get('/book/new', [BookController::class, 'create'])->name('book.create');
     Route::post('/book', [BookController::class, 'store'])->name('book.store');
     Route::put('/book/{id}', [BookController::class, 'update'])->name('book.update');
+    //loan
+    Route::get('loans', [LoanController::class, 'index'])->name('loans.index');
 });
 
 require __DIR__.'/auth.php';

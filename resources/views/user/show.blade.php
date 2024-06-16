@@ -6,14 +6,18 @@
                 @if(session('success'))
                     <div class="toast toast-top toast-end mt-12">
                         <div class="alert alert-success text-white">
-                            <span>Message sent successfully.</span>
+                            <span>Usuário editado com sucesso</span>
                         </div>
                     </div>
                 @endif
                 <div class="max-w-2xl px-4 py-8 mx-auto lg:py-16">
                     <div class="flex flex-1 justify-between">
                         <h2 class="mb-4 text-xl font-bold text-gray-900">Perfil</h2>
-                        <div class="flex  justify-end items-end">
+
+                        <div class="flex  justify-end items-end gap-4">
+                            <button
+                                class="btn btn-neutral text-gray-200">
+                                <a href="">Emprestar livro</a></button>
                             <form action="{{route('user.delete', ['id'=> $user->id])}}" method="POST">
                                 @method('DELETE')
                                 @csrf()
@@ -86,6 +90,39 @@
                             <button type="submit" class="btn btn-neutral text-white">Atualizar perfil</button>
                         </div>
                     </form>
+                </div>
+                <div class="max-w-2xl px-4 py-8 mx-auto lg:py-16">
+                    <h2 class="text-gray-700">Livros Emprestados</h2>
+                    <div class="overflow-x-auto">
+                        <table class="table text-gray-800">
+                            <thead>
+                            <tr class="text-gray-800">
+                                <th>Título</th>
+                                <th>Autor</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @forelse($user->books as $book)
+                                <tr>
+                                    <th>{{$book->title}}</th>
+                                    <td>{{$book->author}}</td>
+                                    <td>{{$book->pivot->loan_status ?? 'Em dia'}}</td>
+                                    <td>
+                                        <button class=" btn btn-neutral
+                            ">Acao
+                                        </button>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td>Não há livros com esse usuário</td>
+                                </tr>
+                            @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
         </div>

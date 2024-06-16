@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg flex-1">
                 <div class="p-6 text-gray-900 flex flex-col gap-5">
                     <h1 class="text-3xl">Ver perfil</h1>
-                    <span> Visualizar todos os usuários cadastrados no sistema.</span>
+                    <span> Visualize todos os usuários cadastrados no sistema.</span>
                     <button class="btn btn-neutral font-black text-lg text-white"><a class="w-full"
                                                                                      href="{{ route('user.index')}}">Ver
                             perfis</a></button>
@@ -19,9 +19,18 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg flex-1">
                 <div class="p-6 text-gray-900 flex flex-col gap-5">
                     <h1 class="text-3xl">Ver livros</h1>
-                    <span>Visualizar todos os livros cadastrados no sistema e seus detalhes.</span>
+                    <span>Visualize todos os livros cadastrados no sistema e seus detalhes.</span>
                     <button class="btn btn-neutral font-black text-lg text-white">
                         <a class="w-full" href="{{ route('book.index')}}">Ver Livros</a>
+                    </button>
+                </div>
+            </div>
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg flex-1">
+                <div class="p-6 text-gray-900 flex flex-col gap-5">
+                    <h1 class="text-3xl">Ver empréstimos</h1>
+                    <span>Visualize todos os empréstimos.</span>
+                    <button class="btn btn-neutral font-black text-lg text-white">
+                        <a class="w-full" href="">Ver empréstimos</a>
                     </button>
                 </div>
             </div>

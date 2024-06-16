@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -61,8 +62,8 @@ class User extends Authenticatable
             'password'          => 'hashed',
         ];
 
-    public function books()
+    public function books(): BelongsToMany
     {
-        return $this->hasMany(Loan::class);
+        return $this->belongsToMany(Book::class, 'book_user', 'user_id', 'book_id');
     }
 }

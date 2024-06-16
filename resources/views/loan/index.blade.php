@@ -1,13 +1,6 @@
 <x-app-layout>
-    @if(session('deleted'))
-        <div class="toast toast-top toast-end mt-12">
-            <div class="alert alert-error text-white">
-                <span>Excluido com sucesso!</span>
-            </div>
-        </div>
-    @endif
     <div class="flex flex-1 justify-center flex-col items-center h-full w-full gap-4 mt-10">
-        <h1 class="font-bold text-4xl">Usúarios</h1>
+        <h1 class="font-bold text-4xl">Empréstimos</h1>
         <div class="w-[90%] h-full phone-6 bg-white ">
             <div class="overflow-x-auto p-5">
                 <table class="table">

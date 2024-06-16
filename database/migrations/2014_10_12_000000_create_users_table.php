@@ -16,8 +16,8 @@ return new class extends Migration {
             $table->string('document')->unique();
             $table->string('email')->unique();
             $table->string('registration_number');
-            $table->boolean('isAdmin')->default(false);
             $table->string('password');
+            $table->boolean('isAdmin')->default(false);
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
 

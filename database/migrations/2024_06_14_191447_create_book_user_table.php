@@ -11,11 +11,11 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('loans', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+        Schema::create('book_user', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->foreignUuid('user_id')->references('id')->on('users');
             $table->foreignUuid('book_id')->references('id')->on('books');
-            $table->enum('loan_status', [LoanStatusEnum::class]);
+            $table->enum('loan_status', [LoanStatusEnum::class])->nullable();
 
             $table->softDeletes();
             $table->timestamps();
@@ -27,6 +27,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('loans');
+        Schema::dropIfExists('book_user');
     }
 };

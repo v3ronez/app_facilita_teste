@@ -2,8 +2,8 @@
 
 namespace App\Enums;
 
-enum LoanStatusEnum: int
+enum LoanStatusEnum: string
 {
-    case LATE = 1;
-    case RETURNED = 2;
+    case LATE = 'Atrasado';
+    case RETURNED = 'Devolvido';
 }

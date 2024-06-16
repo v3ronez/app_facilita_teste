@@ -1,4 +1,4 @@
-@php use App\Enums\BookStatusEnum; @endphp
+@php use App\Enums\BookStatusEnum;use Illuminate\Support\Facades\Session; @endphp
 <x-app-layout>
     <div class="flex flex-1 justify-center flex-col items-center h-full w-full gap-4 mt-10">
         <div class="w-[70%] h-full rounded border-2">
@@ -15,9 +15,19 @@
                                 class="badge bg-red-500 border-red-400 text-white">{{ ucfirst($book->status->value)}}
                             </div>
                         @endif
+
+
                     </div>
-                    <form action="" method="POST">
+                    @if(session('success'))
+                        <div class="toast toast-md toast-end">
+                            <div class="alert alert-success text-white">
+                                <span>Message sent successfully.</span>
+                            </div>
+                        </div>
+                    @endif
+                    <form action="{{route('book.update', ['id' => $book->id])}}" method="POST">
                         @csrf()
+                        @method('PUT')
                         <div class="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
                             <div class="sm:col-span-2">
                                 <label for="title"
@@ -49,7 +59,7 @@
                                            value="{{$book->registration_number}}" disabled>
                                 </div>
                             @endisset
-                            @isset($book)
+                            @if($book->loandedFor())
                                 <div class="w-full">
                                     <label for="emprestado para:"
                                            class="block mb-2 text-sm font-medium text-gray-900">Emprestado
@@ -61,25 +71,28 @@
                                     <span class="text-red-600 font-bold">{{ $message }}</span>
                                     @enderror
                                 </div>
-                            @endisset
+                            @endif
                             <div class="w-full">
                                 <label for="gender"
                                        class="block mb-2 text-sm font-medium text-gray-900">Gênero</label>
                                 <select
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                     name="gender">
-                                    <option disabled selected>Selecione um gênero</option>
-                                    {{--                                    @foreach($genders as $gender)--}}
-                                    {{--                                        <option>{{ucfirst($gender->name)}}</option>--}}
-                                    {{--                                    @endforeach--}}
+                                    @if(!$book->gender)
+                                        <option disabled selected>Selecione um gênero</option>
+                                    @endif
+                                    @foreach($genders as $gender)
+                                        @if($book->gender == ucfirst($gender->name))
+                                            <option selected>{{ucfirst($gender->name)}}</option>
+                                        @else
+                                            <option>{{ucfirst($gender->name)}}</option>
+                                        @endif
+                                    @endforeach
                                 </select>
-                                @error('loanded_for')
-                                <span class="text-red-600 font-bold">{{ $message }}</span>
-                                @enderror
                             </div>
                         </div>
                         <button type="submit" class="btn btn-neutral text-white">
-                            Cadastrar
+                            Editar
                         </button>
                     </form>
                 </div>

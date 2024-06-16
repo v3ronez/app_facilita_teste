@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/book/{id}', [BookController::class, 'show'])->name('book.show');
     Route::get('/book/new', [BookController::class, 'create'])->name('book.create');
     Route::post('/book', [BookController::class, 'store'])->name('book.store');
+    Route::put('/book/{id}', [BookController::class, 'update'])->name('book.update');
 });
 
 require __DIR__.'/auth.php';

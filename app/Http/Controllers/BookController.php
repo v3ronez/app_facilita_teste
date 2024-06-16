@@ -34,11 +34,12 @@ class BookController extends Controller
     public function show(Request $request, $bookID)
     {
         try {
-            $book = $this->bookService->withRelations($bookID);
+            $book = $this->bookService->findById($bookID);
+            $genders = Gender::all();
             if (!$book) {
                 return response()->view('errors.404');
             }
-            return response()->view('book.show', compact('book'));
+            return response()->view('book.show', compact('book', 'genders'));
         } catch (Exception $e) {
             Log::error("Exception error", [$e->getMessage()]);
             return response('unexpected error', 500);
@@ -71,6 +72,30 @@ class BookController extends Controller
                 return back()->with('error', 'Something went wrong');
             }
             return redirect()->route('book.index')->with('success', 'Book created successfully');
+        } catch (Exception $e) {
+            Log::error("Exception error", [$e->getMessage()]);
+            return response('unexpected error', 500);
+        }
+    }
+
+    public function update(Request $request, $bookId)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'title'  => ['required', 'string', 'min:3', 'max:255'],
+                'author' => ['required', 'string', 'min:3', 'max:255'],
+                'gender' => ['required'],
+            ]);
+            if ($validator->fails()) {
+                return back()->withErrors($validator->errors())->withInput();
+            }
+            $bookExists = $this->bookService->findById($bookId);
+            if (!$bookExists) {
+                return response()->view('errors.404', '', 404);
+            }
+            $fields = $request->only(['title', 'author', 'gender']);
+            $this->bookService->update($bookId, $fields);
+            return back()->with('success', 'Book updated successfully');
         } catch (Exception $e) {
             Log::error("Exception error", [$e->getMessage()]);
             return response('unexpected error', 500);

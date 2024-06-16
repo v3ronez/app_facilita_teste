@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
+use App\Repository\BookRepository;
 use App\Repository\UserRepository;
+use App\Services\BookService;
+use App\Services\LoanService;
 use App\Services\UserService;
 use Exception;
 use Illuminate\Http\Request;
@@ -12,10 +16,16 @@ use Illuminate\Support\Facades\Validator;
 class UserController extends Controller
 {
     private UserService $userService;
+    private BookService $bookService;
+    private LoanService $loanService;
+    private BookRepository $bookRepository;
 
     public function __construct()
     {
+        $this->bookRepository = new BookRepository();
         $this->userService = new UserService(new UserRepository());
+        $this->bookService = new BookService($this->bookRepository);
+        $this->loanService = new LoanService($this->bookRepository);
     }
 
     /**
@@ -39,10 +49,11 @@ class UserController extends Controller
     {
         try {
             $user = $this->userService->withRelations($userID, ['books']);
+            $books = Book::all();
             if (!$user) {
                 return response()->view('errors.404');
             }
-            return response()->view('user.show', compact('user'));
+            return response()->view('user.show', compact('user', 'books'));
         } catch (Exception $e) {
             Log::error("Exception error", [$e->getMessage()]);
             return response()->view('errors.500', [], 500);
@@ -65,7 +76,7 @@ class UserController extends Controller
             }
             $userExists = $this->userService->findById($userID);
             if (!$userExists) {
-                return response()->view('errors.404', '', 404);
+                return response()->view('errors.404', [], 404);
             }
             $fields = $request->only(['name', 'email', 'document']);
             $fields['isAdmin'] = $request->has('isAdmin');
@@ -91,10 +102,33 @@ class UserController extends Controller
         try {
             $user = $this->userService->findById($id);
             if (!$user) {
-                return response()->view('errors.404', '', 404);
+                return response()->view('errors.404', [], 404);
             }
             $this->userService->delete($user->id);
             return redirect()->route('user.index')->with('deleted', 'Usúario excluido com sucesso!');
+        } catch (Exception $e) {
+            Log::error("Exception error", [$e->getMessage()]);
+            return response()->view('errors.500', [], 500);
+        }
+    }
+
+    public function loanCreate(Request $request, string $userID)
+    {
+        try {
+            $user = $this->userService->findById($userID);
+            if (!$user) {
+                return response()->view('errors.404', [], 404);
+            }
+            $book = $this->bookService->findById($request->get('book_id'));
+            if (!$book) {
+                return response()->view('errors.404', [], 404);
+            }
+
+            $this->loanService->attach($user, $book);
+            return back()->with(
+                'success',
+                'Perfil Editado com sucesso!'
+            );
         } catch (Exception $e) {
             Log::error("Exception error", [$e->getMessage()]);
             return response()->view('errors.500', [], 500);

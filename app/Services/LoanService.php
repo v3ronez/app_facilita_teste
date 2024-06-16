@@ -2,44 +2,23 @@
 
 namespace App\Services;
 
-use App\Repository\BaseRepositoryInterface;
+use App\Enums\BookStatusEnum;
+use App\Models\Book;
+use App\Models\User;
+use App\Repository\BaseRepository;
 
 class LoanService
 {
-    private $repository;
+    private BaseRepository $bookRepository;
 
-    public function __construct(BaseRepositoryInterface $repository)
+    public function __construct($bookRepository)
     {
-        $this->repository = $repository;
+        $this->bookRepository = $bookRepository;
     }
 
-    public function createUser(array $fields)
+    public function attach(User $user, Book $book)
     {
-        return $this->repository->create($fields);
-    }
-
-    public function updateUser(string $id, array $fields)
-    {
-        return $this->repository->updateById($id, $fields);
-    }
-
-    public function delete(string $id)
-    {
-        return $this->repository->delete($id);
-    }
-
-    public function getPaginateBootstrap()
-    {
-        return $this->repository->getPaginateBootstrap();
-    }
-
-    public function findById($id)
-    {
-        return $this->repository->findById($id);
-    }
-
-    public function withRelations($id, array $array = [])
-    {
-        return $this->repository->withRelations($id, $array);
+        $user->books()->attach($book);
+        return $this->bookRepository->updateById($book->id, ['status' => BookStatusEnum::BORROWED]);
     }
 }

@@ -21,4 +21,6 @@ class BookRepository extends BaseRepository
     {
         return $this->model->paginate($perPage, $columns);
     }
+
+
 }

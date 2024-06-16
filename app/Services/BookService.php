@@ -33,6 +33,11 @@ class BookService
         return $this->repository->getPaginateBootstrap();
     }
 
+    public function getPaginateBootstrapAvailable($key, $condition)
+    {
+        return $this->repository->getPaginateBootstrapWithCondition($key, $condition);
+    }
+
     public function findById($id)
     {
         return $this->repository->findById($id);

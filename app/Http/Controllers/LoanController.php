@@ -15,7 +15,7 @@ class LoanController extends Controller
         $this->loanService = new LoanService(new UserRepository());
     }
 
-    public function loan()
+    public function create()
     {
         try {
             return false;

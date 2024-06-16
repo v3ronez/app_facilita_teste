@@ -1,5 +1,12 @@
 @php use App\Enums\BookStatusEnum;use Illuminate\Support\Facades\Session; @endphp
 <x-app-layout>
+    @if(session('success'))
+        <div class="toast toast-top toast-end mt-12">
+            <div class="alert alert-success text-white">
+                <span>Livro editado com sucesso!</span>
+            </div>
+        </div>
+    @endif
     <div class="flex flex-1 justify-center flex-col items-center h-full w-full gap-4 mt-10">
         <div class="w-[70%] h-full rounded border-2">
             <section class="bg-white rounded border-2">
@@ -18,13 +25,6 @@
 
 
                     </div>
-                    @if(session('success'))
-                        <div class="toast toast-md toast-end">
-                            <div class="alert alert-success text-white">
-                                <span>Message sent successfully.</span>
-                            </div>
-                        </div>
-                    @endif
                     <form action="{{route('book.update', ['id' => $book->id])}}" method="POST">
                         @csrf()
                         @method('PUT')

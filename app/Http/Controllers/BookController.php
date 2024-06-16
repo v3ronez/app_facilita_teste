@@ -27,7 +27,7 @@ class BookController extends Controller
             return response()->view('book.index', compact('books'));
         } catch (Exception $e) {
             Log::error("Exception error", [$e->getMessage()]);
-            return response('unexpected error', 500);
+            return response()->view('errors.500', [], 500);
         }
     }
 
@@ -42,7 +42,7 @@ class BookController extends Controller
             return response()->view('book.show', compact('book', 'genders'));
         } catch (Exception $e) {
             Log::error("Exception error", [$e->getMessage()]);
-            return response('unexpected error', 500);
+            return response()->view('errors.500', [], 500);
         }
     }
 
@@ -74,7 +74,7 @@ class BookController extends Controller
             return redirect()->route('book.index')->with('success', 'Book created successfully');
         } catch (Exception $e) {
             Log::error("Exception error", [$e->getMessage()]);
-            return response('unexpected error', 500);
+            return response()->view('errors.500', [], 500);
         }
     }
 
@@ -95,10 +95,25 @@ class BookController extends Controller
             }
             $fields = $request->only(['title', 'author', 'gender']);
             $this->bookService->update($bookId, $fields);
-            return back()->with('success', 'Book updated successfully');
+            return back()->with('success', 'Book editado com sucesso!');
         } catch (Exception $e) {
             Log::error("Exception error", [$e->getMessage()]);
-            return response('unexpected error', 500);
+            return response()->view('errors.500', [], 500);
+        }
+    }
+
+    public function destroy(Request $request, $bookID)
+    {
+        try {
+            $book = $this->bookService->findById($bookID);
+            if (!$book) {
+                return response()->view('errors.404', '', 404);
+            }
+            $this->bookService->delete($book->id);
+            return redirect()->route('book.index')->with('deleted', 'Livro excluido com sucesso!');
+        } catch (Exception $e) {
+            Log::error("Exception error", [$e->getMessage()]);
+            return response()->view('errors.500', [], 500);
         }
     }
 }

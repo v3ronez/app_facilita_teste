@@ -28,7 +28,7 @@ class UserController extends Controller
             return response()->view('user.index', compact('users'));
         } catch (Exception $e) {
             Log::error("Exception error", [$e->getMessage()]);
-            return response('unexpected error', 500);
+            return response()->view('errors.500', [], 500);
         }
     }
 
@@ -61,7 +61,7 @@ class UserController extends Controller
             return response()->view('user.show', compact('user'));
         } catch (Exception $e) {
             Log::error("Exception error", [$e->getMessage()]);
-            return response('unexpected error', 500);
+            return response()->view('errors.500', [], 500);
         }
     }
 
@@ -97,13 +97,13 @@ class UserController extends Controller
             if (!$user) {
                 return response()->view('errors.500', '', 500);
             }
-            return response()->redirectToRoute('user.show', ['id' => $userID])->with(
+            return back()->with(
                 'success',
                 'Perfil Editado com sucesso!'
             );
         } catch (Exception $e) {
             Log::error("Exception error", [$e->getMessage()]);
-            return response('unexpected error', 500);
+            return response()->view('errors.500', [], 500);
         }
     }
 
@@ -118,10 +118,10 @@ class UserController extends Controller
                 return response()->view('errors.404', '', 404);
             }
             $this->userService->delete($user->id);
-            return redirect()->route('user.index');
+            return redirect()->route('user.index')->with('deleted', 'Usúario excluido com sucesso!');
         } catch (Exception $e) {
             Log::error("Exception error", [$e->getMessage()]);
-            return response('unexpected error', 500);
+            return response()->view('errors.500', [], 500);
         }
     }
 }

@@ -30,7 +30,7 @@
                     <h1 class="text-3xl">Ver empréstimos</h1>
                     <span>Visualize todos os empréstimos.</span>
                     <button class="btn btn-neutral font-black text-lg text-white">
-                        <a class="w-full" href="">Ver empréstimos</a>
+                        <a class="w-full" href="{{route('loan.index')}}">Ver empréstimos</a>
                     </button>
                 </div>
             </div>

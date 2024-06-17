@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/book/{id}', [BookController::class, 'update'])->name('book.update');
 
     //loan
+    Route::get('/loans', [LoanController::class, 'index'])->name('loan.index');
     Route::post('/loan/{id}', [LoanController::class, 'store'])->name('loan.store');
     Route::put('/loan/status/{id}', [LoanController::class, 'update'])->name('loan.update');
 });

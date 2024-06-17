@@ -24,6 +24,12 @@ class LoanController extends Controller
     }
 
 
+    public function index(Request $request)
+    {
+        $users = $this->userRepository->getPaginateBootstrap();
+        return view('loan.index', compact('users'));
+    }
+
     public function store(Request $request, string $userID)
     {
         try {

@@ -17,7 +17,7 @@ Projeto de cron para sincronização dos arquivos disponibilizados pela api da O
 - MVC
 - Front controller
 
-###       * Preparando o ambiente *
+###        * Preparando o ambiente *
 
 #### Ambiente *SEM* docker
 
@@ -63,7 +63,7 @@ DB_PASSWORD=root
 
 `docker exec laravel-app pnpm run dev` → inicializar o vite
 
-`docker exec laravel-app  php artisan migrate` →rodar as migrates
+`docker exec laravel-app  php artisan migrate` → rodar as migrates
 
 `docker exec laravel-app  php artisan db:seed` → rodar as seed
 

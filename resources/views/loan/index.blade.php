@@ -7,30 +7,32 @@
                     <thead>
                     <tr class="font-bold text-lg text-gray-700">
                         <th></th>
-                        <th>Nome</th>
-                        <th>Documento</th>
-                        <th>Email</th>
+                        <th>Livro</th>
+                        <th>Emprestado para</th>
+                        <th>CPF</th>
+                        <th>Status</th>
                         <th>Ações</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @forelse($users as $user)
+                    @forelse($loans as $loan)
                         <tr class="font-bold text-lg text-gray-500">
                             <th>#</th>
-                            <td>{{$user->name}}</td>
-                            <td>{{formatCpf($user->document)}}</td>
-                            <td>{{$user->email}}</td>
+                            <td>{{$loan->title}}</td>
+                            <td>{{$loan->name}}</td>
+                            <td>{{formatCpf($loan->document)}}</td>
+                            <td>{{ucfirst($loan->loan_status)}}</td>
                             <td>
                                 <button class="btn btn-neutral"><a
-                                        href="{{ route('user.show', ['id' => $user->id]) }}">Ver
-                                        Perfil</a></button>
+                                        href="{{ route('user.show', ['id' => $loan->user_id]) }}">Ver detalhes</a>
+                                </button>
                             </td>
                         </tr>
                     @empty
                         <tr>Não usuário foi cadastrado ainda.</tr>
                     @endforelse
                 </table>
-                {{ $users->links() }}
+                {{ $loans->links() }}
             </div>
         </div>
     </div>

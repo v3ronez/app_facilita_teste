@@ -26,8 +26,8 @@ class LoanController extends Controller
 
     public function index(Request $request)
     {
-        $users = $this->userRepository->getPaginateBootstrap();
-        return view('loan.index', compact('users'));
+        $loans = $this->loanService->getAllLoans();
+        return view('loan.index', compact('loans'));
     }
 
     public function store(Request $request, string $userID)
@@ -70,7 +70,6 @@ class LoanController extends Controller
                 'Perfil Editado com sucesso!'
             );
         } catch (Exception $e) {
-            dd($e->getMessage());
             Log::error("Exception error", [$e->getMessage()]);
             return response()->view('errors.500', [], 500);
         }

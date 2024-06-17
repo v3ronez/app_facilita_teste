@@ -27,11 +27,14 @@ class LoanRepository extends BaseRepository
         return DB::table('book_user')
             ->select([
                 'book_user.id',
-                'users.id',
-                'users.cpf',
+                'book_user.loan_status',
+                'users.id as user_id',
+                'users.document',
+                'users.name',
+                'books.title',
             ])
             ->Join('users', 'book_user.user_id', '=', 'users.id')
             ->join('books', 'book_user.book_id', '=', 'books.id')
-            ->get();
+            ->paginate();
     }
 }

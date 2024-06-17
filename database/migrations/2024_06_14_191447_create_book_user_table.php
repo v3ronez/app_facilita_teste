@@ -22,7 +22,7 @@ return new class extends Migration {
                     LoanStatusEnum::RETURNED->value,
                     LoanStatusEnum::OK->value,
                 ]
-            )->nullable();
+            )->default(LoanStatusEnum::OK->value);
 
             $table->softDeletes();
             $table->timestamps();

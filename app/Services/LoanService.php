@@ -5,16 +5,19 @@ namespace App\Services;
 use App\Enums\BookStatusEnum;
 use App\Enums\LoanStatusEnum;
 use App\Repository\BookRepository;
+use App\Repository\LoanRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class LoanService
 {
     private BookRepository $bookRepository;
+    private LoanRepository $loanRepository;
 
     public function __construct($bookRepository)
     {
         $this->bookRepository = $bookRepository;
+        $this->loanRepository = new LoanRepository();
     }
 
     public function attach(Model $user, Model $book)
@@ -44,5 +47,10 @@ class LoanService
             ])
             ->whereNull('deleted_at')
             ->update(['loan_status' => $status->value]);
+    }
+
+    public function getAllLoans()
+    {
+        return $this->loanRepository->getAllLoans();
     }
 }

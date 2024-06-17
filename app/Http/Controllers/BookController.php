@@ -71,7 +71,7 @@ class BookController extends Controller
             if (!$create) {
                 return back()->with('error', 'Something went wrong');
             }
-            return redirect()->route('book.index')->with('success', 'Book created successfully');
+            return redirect()->route('admin.book.index')->with('success', 'Book created successfully');
         } catch (Exception $e) {
             Log::error("Exception error", [$e->getMessage()]);
             return response()->view('errors.500', [], 500);
@@ -110,7 +110,7 @@ class BookController extends Controller
                 return response()->view('errors.404', '', 404);
             }
             $this->bookService->delete($book->id);
-            return redirect()->route('book.index')->with('deleted', 'Livro excluido com sucesso!');
+            return redirect()->route('admin.book.index')->with('deleted', 'Livro excluido com sucesso!');
         } catch (Exception $e) {
             Log::error("Exception error", [$e->getMessage()]);
             return response()->view('errors.500', [], 500);

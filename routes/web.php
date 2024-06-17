@@ -23,30 +23,42 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', 'redirect_to_profile'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+
+//user-default
+Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
+    Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
+    Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
+});
+
+
+//admin
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('admin.profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('admin.profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     //user
-    Route::get('/users', [UserController::class, 'index'])->name('user.index');
-    Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
-    Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
-    Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.delete');
+    Route::get('/users', [UserController::class, 'index'])->name('admin.user.index');
+    Route::get('/user/{id}', [UserController::class, 'show'])->name('admin.user.show');
+    Route::put('/user/{id}', [UserController::class, 'update'])->name('admin.user.update');
+    Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('admin.user.delete');
 
     //book
-    Route::get('/books', [BookController::class, 'index'])->name('book.index');
-    Route::get('/book/new', [BookController::class, 'create'])->name('book.create');
-    Route::post('/book', [BookController::class, 'store'])->name('book.store');
-    Route::get('/book/{id}', [BookController::class, 'show'])->name('book.show');
-    Route::put('/book/{id}', [BookController::class, 'update'])->name('book.update');
+    Route::get('/books', [BookController::class, 'index'])->name('admin.book.index');
+    Route::get('/book/new', [BookController::class, 'create'])->name('admin.book.create');
+    Route::post('/book', [BookController::class, 'store'])->name('admin.book.store');
+    Route::get('/book/{id}', [BookController::class, 'show'])->name('admin.book.show');
+    Route::put('/book/{id}', [BookController::class, 'update'])->name('admin.book.update');
 
     //loan
-    Route::get('/loans', [LoanController::class, 'index'])->name('loan.index');
-    Route::post('/loan/{id}', [LoanController::class, 'store'])->name('loan.store');
-    Route::put('/loan/status/{id}', [LoanController::class, 'update'])->name('loan.update');
+    Route::get('/loans', [LoanController::class, 'index'])->name('admin.loan.index');
+    Route::post('/loan/{id}', [LoanController::class, 'store'])->name('admin.loan.store');
+    Route::put('/loan/status/{id}', [LoanController::class, 'update'])->name('admin.loan.update');
 });
 
 require __DIR__.'/auth.php';

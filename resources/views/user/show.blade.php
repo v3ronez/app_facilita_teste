@@ -46,11 +46,11 @@
                                                             <td>
                                                                 <div class="flex items-center gap-2 flex-1">
                                                                     <button class="btn btn-neutral"><a
-                                                                            href="{{route('book.show', ['id' => $book->id])}}">Detalhes</a>
+                                                                            href="{{route('admin.book.show', ['id' => $book->id])}}">Detalhes</a>
                                                                     </button>
                                                                     @if($book->status == BookStatusEnum::AVAILABLE)
                                                                         <form method="POST"
-                                                                              action="{{route('loan.store', ['id'=> $user->id])}}">
+                                                                              action="{{route('admin.loan.store', ['id'=> $user->id])}}">
                                                                             <input name="book_id" value="{{$book->id}}"
                                                                                    hidden>
                                                                             @csrf()
@@ -77,7 +77,7 @@
                                     </div>
                                 </dialog>
                                 {{--                            end model--}}
-                                <form action="{{route('user.delete', ['id'=> $user->id])}}" method="POST">
+                                <form action="{{route('admin.user.delete', ['id'=> $user->id])}}" method="POST">
                                     @method('DELETE')
                                     @csrf()
                                     <button type="submit"
@@ -173,7 +173,8 @@
                                     <td>{{$book->author}}</td>
                                     <td colspan="2">
                                         @if(auth()->user()->isAdmin)
-                                            <form action="{{route('loan.update', ['id' => $user->id])}}" method="POST">
+                                            <form action="{{route('admin.loan.update', ['id' => $user->id])}}"
+                                                  method="POST">
                                                 @method('PUT')
                                                 @csrf()
                                                 <input type="hidden" name="book_id" value="{{$book->id}}">

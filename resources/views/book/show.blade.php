@@ -23,7 +23,7 @@
                             </div>
                         @endif
                     </div>
-                    <form action="{{route('book.update', ['id' => $book->id])}}" method="POST">
+                    <form action="{{route('admin.book.update', ['id' => $book->id])}}" method="POST">
                         @csrf()
                         @method('PUT')
                         <div class="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">

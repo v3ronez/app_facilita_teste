@@ -105,7 +105,7 @@ class UserController extends Controller
                 return response()->view('errors.404', [], 404);
             }
             $this->userService->delete($user->id);
-            return redirect()->route('user.index')->with('deleted', 'Usúario excluido com sucesso!');
+            return redirect()->route('admin.user.index')->with('deleted', 'Usúario excluido com sucesso!');
         } catch (Exception $e) {
             Log::error("Exception error", [$e->getMessage()]);
             return response()->view('errors.500', [], 500);

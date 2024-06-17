@@ -4,7 +4,7 @@
         <h1 class="font-bold text-4xl">Livros</h1>
         <div class="w-[90%] h-full phone-6 bg-white">
             <div class="max-w-fit m-5 flex">
-                <button class="btn btn-neutral"><a href="{{ route('book.create')}}">Novo</a></button>
+                <button class="btn btn-neutral"><a href="{{ route('admin.book.create')}}">Novo</a></button>
             </div>
             <div class="overflow-x-auto p-5">
                 <table class="table">
@@ -27,7 +27,8 @@
                                 {{ ucfirst($book->status->value)}}
                             </td>
                             <td>
-                                <button class="btn btn-neutral"><a href="{{route('book.show', ['id' => $book->id])}}">Ver
+                                <button class="btn btn-neutral"><a
+                                        href="{{route('admin.book.show', ['id' => $book->id])}}">Ver
                                         Perfil</a></button>
                             </td>
                         </tr>

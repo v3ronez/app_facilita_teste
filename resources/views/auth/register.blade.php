@@ -1,7 +1,8 @@
+@php use App\Models\User; @endphp
 <x-guest-layout>
     <form method="POST" action="{{ route('register') }}">
         @csrf
-
+        @dd(User::first())
         <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('Name')"/>

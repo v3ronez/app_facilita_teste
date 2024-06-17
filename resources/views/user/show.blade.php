@@ -1,4 +1,4 @@
-@php use App\Enums\BookStatusEnum;use Illuminate\Support\Facades\Session; @endphp
+@php use App\Enums\BookStatusEnum;use App\Enums\LoanStatusEnum;use Illuminate\Support\Facades\Log;use Illuminate\Support\Facades\Session; @endphp
 <x-app-layout>
     <div class="flex flex-1 justify-center flex-col items-center h-full w-full gap-4 mt-10">
         <div class="w-[70%] h-full rounded border-2">
@@ -72,10 +72,6 @@
                                                         <tr>Não há livros cadastrados no sistema.</tr>
                                                     @endforelse
                                                 </table>
-                                                <div class="flex gap-2">
-                                                    <button class="btn">Close</button>
-                                                    <button class="btn">Cadastrar</button>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -175,11 +171,32 @@
                                 <tr>
                                     <th>{{$book->title}}</th>
                                     <td>{{$book->author}}</td>
-                                    <td colspan="2">{{$book->pivot->loan_status ?? 'Em dia'}}</td>
+                                    <td colspan="2">
+                                        @if(auth()->user()->isAdmin)
+                                            <form action="{{route('loan.update', ['id' => $user->id])}}" method="POST">
+                                                @method('PUT')
+                                                @csrf()
+                                                <input type="hidden" name="book_id" value="{{$book->id}}">
+                                                <select
+                                                    class="select select-ghost w-full bg-white border-gray-700 max-w-xs"
+                                                    name="loan_status">
+                                                    @foreach(LoanStatusEnum::cases() as $status)
+                                                        @if($book->pivot->loan_status == $status->value)
+                                                            <option selected>{{ucfirst($status->value)}}</option>
+                                                        @else
+                                                            <option>{{ucfirst($status->value)}}</option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                                @else
+                                                    <input type="text" disabled
+                                                           value="{{ $book->pivot->loan_status ? ucfirst($book->pivot->loan_status): ucfirst(LoanStatusEnum::OK->value) }}">
+                                            </form>
+                                        @endif
+                                    </td>
                                     @if(auth()->user()->isAdmin)
                                         <td>
                                             <form>
-
                                                 <button type="submit" class="btn btn-neutral text-white">Editar</button>
                                             </form>
                                         </td>

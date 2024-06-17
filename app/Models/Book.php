@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\DB;
 
 class Book extends Model
 {
@@ -29,13 +28,8 @@ class Book extends Model
 
     protected $casts = ['status' => BookStatusEnum::class];
 
-    public function borrowers(): BelongsToMany
+    public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'book_user', 'book_id', 'user_id');
-    }
-
-    public function loanStatus()
-    {
-        return DB::table('book_user')->where('book_id', '=', $this->id)->get();
+        return $this->belongsToMany(User::class)->withPivot('loan_status');
     }
 }

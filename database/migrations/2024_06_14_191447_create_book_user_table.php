@@ -15,7 +15,14 @@ return new class extends Migration {
             $table->bigIncrements('id');
             $table->foreignUuid('user_id')->references('id')->on('users');
             $table->foreignUuid('book_id')->references('id')->on('books');
-            $table->enum('loan_status', [LoanStatusEnum::class])->nullable();
+            $table->enum(
+                'loan_status',
+                [
+                    LoanStatusEnum::LATE->value,
+                    LoanStatusEnum::RETURNED->value,
+                    LoanStatusEnum::OK->value,
+                ]
+            )->nullable();
 
             $table->softDeletes();
             $table->timestamps();

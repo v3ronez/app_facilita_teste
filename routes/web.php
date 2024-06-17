@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\LoanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -32,7 +33,6 @@ Route::middleware('auth')->group(function () {
     //user
     Route::get('/users', [UserController::class, 'index'])->name('user.index');
     Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
-    Route::post('/user/loan/{id}', [UserController::class, 'loanCreate'])->name('loan.store');
     Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
     Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.delete');
 
@@ -42,6 +42,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/book/new', [BookController::class, 'create'])->name('book.create');
     Route::post('/book', [BookController::class, 'store'])->name('book.store');
     Route::put('/book/{id}', [BookController::class, 'update'])->name('book.update');
+
+    //loan
+    Route::post('/loan/{id}', [LoanController::class, 'store'])->name('loan.store');
+    Route::put('/loan/status/{id}', [LoanController::class, 'update'])->name('loan.update');
 });
 
 require __DIR__.'/auth.php';

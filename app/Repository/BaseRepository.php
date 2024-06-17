@@ -58,7 +58,6 @@ class BaseRepository implements BaseRepositoryInterface
                 return $row;
             }
             $row->update($newValues);
-
             /** @var Model|null $row */
             return $row;
         } catch (Exception $e) {

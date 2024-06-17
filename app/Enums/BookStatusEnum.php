@@ -4,6 +4,6 @@ namespace App\Enums;
 
 enum BookStatusEnum: string
 {
-    case AVAILABLE = 'available';
-    case BORROWED = 'borrowed';
+    case AVAILABLE = 'disponível';
+    case BORROWED = 'emprestado';
 }

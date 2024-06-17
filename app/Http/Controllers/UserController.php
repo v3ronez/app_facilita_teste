@@ -111,27 +111,4 @@ class UserController extends Controller
             return response()->view('errors.500', [], 500);
         }
     }
-
-    public function loanCreate(Request $request, string $userID)
-    {
-        try {
-            $user = $this->userService->findById($userID);
-            if (!$user) {
-                return response()->view('errors.404', [], 404);
-            }
-            $book = $this->bookService->findById($request->get('book_id'));
-            if (!$book) {
-                return response()->view('errors.404', [], 404);
-            }
-
-            $this->loanService->attach($user, $book);
-            return back()->with(
-                'success',
-                'Perfil Editado com sucesso!'
-            );
-        } catch (Exception $e) {
-            Log::error("Exception error", [$e->getMessage()]);
-            return response()->view('errors.500', [], 500);
-        }
-    }
 }

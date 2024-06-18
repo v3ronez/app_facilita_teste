@@ -1,4 +1,3 @@
-> This is a challenge by [Coodesh](https://coodesh.com/)
 
 # Projeto Deméter #
 
@@ -9,6 +8,7 @@ Projeto de cron para sincronização dos arquivos disponibilizados pela api da O
 - php 8.1 >=
 - laravel 0.0>=
 - composer >= 2.5
+- mysql >= 8
 
 ## Design Patterns usados
 

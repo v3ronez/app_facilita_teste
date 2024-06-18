@@ -23,12 +23,15 @@ WORKDIR /var/www/html
 
 COPY . .
 
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+RUN composer install
 RUN pnpm install
 
 RUN chmod -R 775 /var/www/html/storage
+RUN chown -R www-data:www-data /var/www/html/vendor
 
 EXPOSE 8000
 EXPOSE 3000
+
+RUN composer dump-autoload && php artisan key:generate
 
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]

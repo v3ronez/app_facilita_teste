@@ -1,7 +1,7 @@
 ### Requisitos
 
 - php 8.1 >=
-- laravel 0.0>=
+- laravel 10.0>=
 - composer >= 2.5
 - mysql >= 8
 
